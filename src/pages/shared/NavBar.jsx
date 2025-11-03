@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth-context/AuthContext";
 
 function NavBar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const { user, signOutUser } = useContext(AuthContext);
+    const isLoggedIn = !!user;
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
     };
 
-    const handleLogin = () => {
-        setIsLoggedIn(true);
+    const handleSignOut = () => {
+        // close mobile menu if open
         closeMobileMenu();
+        signOutUser()
+            .then(() => {
+                console.log('signed out user');
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        closeMobileMenu();
-    };
+    // user info for dropdown and sidebar
+    const userPhoto = user?.photoURL || "https://i.pravatar.cc/150?img=3";
+    const userName = user?.displayName || "User";
+    const userEmail = user?.email || "";
 
     return (
         <div className=" bg-gray-300">
             <div className="navbar max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8 relative">
                 {/* Left - Logo + Mobile Menu */}
                 <div className="navbar-start">
-
                     {/* Modern Mobile Menu Button */}
                     <button
                         className="btn btn-ghost btn-circle lg:hidden"
@@ -81,7 +90,7 @@ function NavBar() {
                                 <div className="w-10 rounded-full">
                                     <img
                                         alt="User Profile"
-                                        src="https://i.pravatar.cc/150?img=3"
+                                        src={userPhoto}
                                     />
                                 </div>
                             </div>
@@ -89,7 +98,7 @@ function NavBar() {
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box w-52 mt-3 p-2 shadow z-50">
                                 <li><a>Profile</a></li>
                                 <li><a>Settings</a></li>
-                                <li><a onClick={handleLogout}>Logout</a></li>
+                                <li><a onClick={handleSignOut}>Logout</a></li>
                             </ul>
                         </div>
                     )}
@@ -150,24 +159,24 @@ function NavBar() {
                                         <div className="w-12 h-12 rounded-full overflow-hidden">
                                             <img
                                                 alt="User Profile"
-                                                src="https://i.pravatar.cc/150?img=3"
+                                                src={userPhoto}
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
                                         <div>
-                                            <p className="font-semibold">John Doe</p>
-                                            <p className="text-sm text-gray-600">john@example.com</p>
+                                            <p className="font-semibold">{userName}</p>
+                                            <p className="text-sm text-gray-600">{userEmail}</p>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <a className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Profile</a>
                                         <a className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Settings</a>
-                                        <a
-                                            className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors text-red-600"
-                                            onClick={handleLogout}
+                                        <button
+                                            className="block w-full text-left py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors text-red-600"
+                                            onClick={handleSignOut}
                                         >
                                             Logout
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             )}
