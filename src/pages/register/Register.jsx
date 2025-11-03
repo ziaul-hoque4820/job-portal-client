@@ -20,7 +20,7 @@ const Register = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault();
         console.log('Registration attempt:', formData);
         // Handle registration logic here
@@ -48,7 +48,7 @@ const Register = () => {
                 </div>
 
                 {/* Form */}
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <form className="mt-8 space-y-6" onSubmit={handleRegister}>
                     <div className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div>

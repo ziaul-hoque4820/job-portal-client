@@ -39,7 +39,11 @@ function NavBar() {
                         </svg>
                     </button>
 
-                    <a className="text-xl font-bold ml-2 lg:ml-0">LOGO</a>
+                    <a className="text-xl font-bold ml-2 lg:ml-0">
+                        <p className="text-2xl font-serif font-bold text-white tracking-wide">
+                            Ziaul<span className="text-yellow-500">.dev</span>
+                        </p>
+                    </a>
                 </div>
 
                 {/* Desktop Menu */}
@@ -104,7 +108,9 @@ function NavBar() {
 
                             {/* Sidebar Header */}
                             <div className="flex items-center justify-between p-4 border-b">
-                                <span className="text-lg font-bold">LOGO</span>
+                                <p className="text-2xl font-serif font-bold text-gray-600">
+                                    Ziaul<span className="text-yellow-500">.dev</span>
+                                </p>
                                 <button
                                     onClick={closeMobileMenu}
                                     className="btn btn-ghost btn-circle btn-sm"
