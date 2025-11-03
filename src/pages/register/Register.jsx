@@ -1,30 +1,29 @@
-// components/Register.js
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context/AuthContext';
+
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        acceptTerms: false
-    });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
+    const { createUser } = useContext(AuthContext);
 
     const handleRegister = (e) => {
         e.preventDefault();
-        console.log('Registration attempt:', formData);
-        // Handle registration logic here
-    };
+
+        const form = e.target;
+        const formData = new FormData(form);
+        const { email, password, ...restFormData } = Object.fromEntries(formData.entries());
+        console.log(email, password, restFormData);
+
+        // create user 
+        createUser(email, password)
+            .then(result => {
+                console.log(result.user);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     return (
         <div className="flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -50,37 +49,18 @@ const Register = () => {
                 {/* Form */}
                 <form className="mt-8 space-y-6" onSubmit={handleRegister}>
                     <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div>
                             <div>
-                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                                    First name
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Name
                                 </label>
                                 <input
-                                    id="firstName"
-                                    name="firstName"
+                                    id="name"
+                                    name="name"
                                     type="text"
-                                    autoComplete="given-name"
                                     required
-                                    value={formData.firstName}
-                                    onChange={handleChange}
                                     className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
-                                    placeholder="First name"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Last name
-                                </label>
-                                <input
-                                    id="lastName"
-                                    name="lastName"
-                                    type="text"
-                                    autoComplete="family-name"
-                                    required
-                                    value={formData.lastName}
-                                    onChange={handleChange}
-                                    className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
-                                    placeholder="Last name"
+                                    placeholder="Name"
                                 />
                             </div>
                         </div>
@@ -93,12 +73,23 @@ const Register = () => {
                                 id="email"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
                                 required
-                                value={formData.email}
-                                onChange={handleChange}
                                 className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
                                 placeholder="Enter your email"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 mb-1">
+                                Photo URL
+                            </label>
+                            <input
+                                id="photoURL"
+                                name="photoURL"
+                                type="text"
+                                required
+                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
+                                placeholder="Photo URL"
                             />
                         </div>
 
@@ -110,33 +101,13 @@ const Register = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="new-password"
                                 required
-                                value={formData.password}
-                                onChange={handleChange}
                                 className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
                                 placeholder="Create a password"
                             />
                             <p className="mt-1 text-xs text-gray-500">
                                 Must be at least 8 characters with a number and symbol
                             </p>
-                        </div>
-
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                                Confirm password
-                            </label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                autoComplete="new-password"
-                                required
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 transition-colors"
-                                placeholder="Confirm your password"
-                            />
                         </div>
                     </div>
 
@@ -146,8 +117,6 @@ const Register = () => {
                             name="acceptTerms"
                             type="checkbox"
                             required
-                            checked={formData.acceptTerms}
-                            onChange={handleChange}
                             className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                         />
                         <label htmlFor="acceptTerms" className="ml-2 block text-sm text-gray-900">

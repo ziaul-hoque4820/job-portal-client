@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function NavBar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,11 +40,11 @@ function NavBar() {
                         </svg>
                     </button>
 
-                    <a className="text-xl font-bold ml-2 lg:ml-0">
+                    <Link to={'/'} className="text-xl font-bold ml-2 lg:ml-0">
                         <p className="text-2xl font-serif font-bold text-white tracking-wide">
                             Ziaul<span className="text-yellow-500">.dev</span>
                         </p>
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Desktop Menu */}
@@ -68,8 +69,8 @@ function NavBar() {
                     {/* If NOT Logged-In - Always visible on navbar */}
                     {!isLoggedIn && (
                         <>
-                            <button className="btn btn-outline btn-sm">Sign In</button>
-                            <button className="btn btn-primary btn-sm">Register</button>
+                            <Link to={'/signin'} className="btn btn-outline btn-sm">Sign In</Link>
+                            <Link to={'/register'} className="btn btn-primary btn-sm">Register</Link>
                         </>
                     )}
 

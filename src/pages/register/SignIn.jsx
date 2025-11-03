@@ -1,25 +1,12 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SignIn = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        rememberMe: false
-    });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
 
-    const handleSubmit = (e) => {
+    const handleSignIN = (e) => {
         e.preventDefault();
-        console.log('Sign in attempt:', formData);
-        // Handle sign in logic here
+
+    
     };
 
     return (
@@ -44,7 +31,7 @@ const SignIn = () => {
                 </div>
 
                 {/* Form */}
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <form className="mt-8 space-y-6" onSubmit={handleSignIN}>
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -54,10 +41,7 @@ const SignIn = () => {
                                 id="email"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
                                 required
-                                value={formData.email}
-                                onChange={handleChange}
                                 className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-colors"
                                 placeholder="Enter your email"
                             />
@@ -70,10 +54,7 @@ const SignIn = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="current-password"
                                 required
-                                value={formData.password}
-                                onChange={handleChange}
                                 className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-colors"
                                 placeholder="Enter your password"
                             />
@@ -86,8 +67,6 @@ const SignIn = () => {
                                 id="rememberMe"
                                 name="rememberMe"
                                 type="checkbox"
-                                checked={formData.rememberMe}
-                                onChange={handleChange}
                                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                             />
                             <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
