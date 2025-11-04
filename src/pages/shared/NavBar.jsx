@@ -69,11 +69,11 @@ function NavBar() {
                 {/* Right - Always visible on all devices */}
                 <div className="navbar-end gap-2">
 
-                    {/* Desktop Search */}
+                    {/* Desktop Search
                     <div className="hidden lg:block">
                         <input type="text" placeholder="Search..."
                             className="input input-bordered input-sm w-40" />
-                    </div>
+                    </div> */}
 
                     {/* If NOT Logged-In - Always visible on navbar */}
                     {!isLoggedIn && (
@@ -144,13 +144,13 @@ function NavBar() {
                             </div>
 
                             {/* Search Bar */}
-                            <div className="p-4 border-t">
+                            {/* <div className="p-4 border-t">
                                 <input
                                     type="text"
                                     placeholder="Search..."
                                     className="input input-bordered w-full"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* User Info Section in Sidebar */}
                             {isLoggedIn && (

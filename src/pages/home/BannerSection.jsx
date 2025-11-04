@@ -146,7 +146,7 @@ function BannerSection() {
                         </motion.h1>
 
                         <motion.p
-                            className="text-xl text-blue-100 mb-8 max-w-2xl"
+                            className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
