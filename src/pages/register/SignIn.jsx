@@ -1,10 +1,24 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context/AuthContext';
 
 const SignIn = () => {
+    const { signInUser, signInWithGoogle } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state || '/';
 
-    const { signInUser } = useContext(AuthContext);
+
+    const handleGoogleRegister = () => {
+        signInWithGoogle()
+        .then(result => {
+            console.log(result);
+            navigate(from);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
 
     const handleSignIN = (e) => {
         e.preventDefault();
@@ -18,6 +32,7 @@ const SignIn = () => {
         signInUser(email, password)
             .then(result => {
                 console.log(result.user);
+                navigate(from);
             })
             .catch((error) => {
                 console.error(error);
@@ -119,6 +134,7 @@ const SignIn = () => {
 
                         <div className="mt-6 grid grid-cols-2 gap-3">
                             <button
+                                onClick={handleGoogleRegister}
                                 type="button"
                                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
                             >

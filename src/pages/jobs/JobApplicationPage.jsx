@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../context/auth-context/AuthContext';
+import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 const JobApplicationPage = () => {
-    const { user } = useContext(AuthContext);
     const jobDetails = useLoaderData();
     console.log(jobDetails);
 
