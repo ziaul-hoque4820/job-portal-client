@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import JobCart from './JobCart'
 import JobModal from './JobModal'
+import { div } from 'framer-motion/client'
 
 function JobDetails() {
     const [jobs, setJobs] = useState([])
@@ -16,7 +17,7 @@ function JobDetails() {
             })
     }, [])
 
-    if (loading) return <p className="text-center py-10">Loading jobs...</p>
+    if (loading) return <div className='flex justify-center'><span className="loading loading-bars loading-xl"></span></div>
 
     return (
         <div className="px-6 lg:px-16 xl:px-34 py-10">

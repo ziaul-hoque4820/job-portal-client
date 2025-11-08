@@ -1,9 +1,58 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const JobApplicationPage = () => {
     const jobDetails = useLoaderData();
-    console.log(jobDetails);
+    const { user } = useAuth();
+
+    const handleApplyFormSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission logic here
+        const form = e.target;
+        const linkedin = form.linkedin.value;
+        const github = form.github.value;
+        const resume = form.resume.value;
+        const coverLetter = form.coverLetter.value;
+
+        console.log(linkedin, github, resume, coverLetter);
+
+        const applicationData = {
+            jobId: jobDetails._id,
+            jobTitle: jobDetails.title,
+            company: jobDetails.company,
+            companyLogo: jobDetails.company_logo,
+            applicantName: user?.displayName,
+            applicantEmail: user?.email,
+            linkedin,
+            github,
+            resume,
+            coverLetter,
+            appliedAt: new Date(),
+            status: "pending"
+        };
+        console.log(applicationData);
+        
+
+        axios.post('http://localhost:3000/applications', applicationData)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -117,7 +166,7 @@ const JobApplicationPage = () => {
                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                         <h2 className="text-2xl font-bold text-gray-900 mb-6">Application Form</h2>
 
-                        <form className="space-y-6">
+                        <form onSubmit={handleApplyFormSubmit} className="space-y-6">
                             {/* LinkedIn Profile */}
                             <div>
                                 <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700 mb-2">
@@ -163,22 +212,21 @@ const JobApplicationPage = () => {
                             {/* Resume/CV Upload */}
                             <div>
                                 <label htmlFor="resume" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Resume/CV
+                                    Resume URL
                                 </label>
-                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
-                                    <div className="space-y-1 text-center">
-                                        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
-                                        <div className="flex text-sm text-gray-600">
-                                            <label htmlFor="resume-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
-                                                <span>Upload a file</span>
-                                                <input id="resume-upload" name="resume-upload" type="file" className="sr-only" />
-                                            </label>
-                                            <p className="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p className="text-xs text-gray-500">PDF, DOC, DOCX up to 10MB</p>
                                     </div>
+                                    <input
+                                        type="url"
+                                        id="resume"
+                                        name="resume"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="https://drive.google.com/your-resume-link"
+                                    />
                                 </div>
                             </div>
 
