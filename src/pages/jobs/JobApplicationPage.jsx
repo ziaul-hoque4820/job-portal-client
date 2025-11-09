@@ -34,7 +34,7 @@ const JobApplicationPage = () => {
             status: "pending"
         };
         console.log(applicationData);
-        
+
 
         axios.post('http://localhost:3000/applications', applicationData)
             .then(res => {
@@ -46,8 +46,9 @@ const JobApplicationPage = () => {
                         title: "Your work has been saved",
                         showConfirmButton: false,
                         timer: 1500
-                    });
+                    })
                 }
+                form.reset();
             })
             .catch(error => {
                 console.log(error);

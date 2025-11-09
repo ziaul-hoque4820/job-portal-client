@@ -59,8 +59,8 @@ function NavBar() {
                 {/* Desktop Menu */}
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 font-medium">
-                        <li><a>Home</a></li>
-                        <li><a>About</a></li>
+                        <li><Link to={'/'}>Home</Link></li>
+                        <li><Link to={'/my-applications'}>My Applications</Link></li>
                         <li><a>Contact</a></li>
                         <li><a>Dashboard</a></li>
                     </ul>
@@ -68,12 +68,6 @@ function NavBar() {
 
                 {/* Right - Always visible on all devices */}
                 <div className="navbar-end gap-2">
-
-                    {/* Desktop Search
-                    <div className="hidden lg:block">
-                        <input type="text" placeholder="Search..."
-                            className="input input-bordered input-sm w-40" />
-                    </div> */}
 
                     {/* If NOT Logged-In - Always visible on navbar */}
                     {!isLoggedIn && (
@@ -137,20 +131,11 @@ function NavBar() {
 
                             {/* Navigation Links */}
                             <div className="p-4 space-y-2">
-                                <a className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">Home</a>
-                                <a className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">About</a>
+                                <Link to={'/'} className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">Home</Link>
+                                <Link to={'/my-applications'} className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">My Applications</Link>
                                 <a className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">Contact</a>
                                 <a className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors font-medium">Dashboard</a>
                             </div>
-
-                            {/* Search Bar */}
-                            {/* <div className="p-4 border-t">
-                                <input
-                                    type="text"
-                                    placeholder="Search..."
-                                    className="input input-bordered w-full"
-                                />
-                            </div> */}
 
                             {/* User Info Section in Sidebar */}
                             {isLoggedIn && (
