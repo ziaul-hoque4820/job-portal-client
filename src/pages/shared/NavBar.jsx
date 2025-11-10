@@ -91,7 +91,7 @@ function NavBar() {
                             <ul tabIndex={0}
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box w-52 mt-3 p-2 shadow z-50">
                                 <li><a>Profile</a></li>
-                                <li><a>Settings</a></li>
+                                <li><Link to={'/addjob'}>Add New Job</Link></li>
                                 <li><a onClick={handleSignOut}>Logout</a></li>
                             </ul>
                         </div>
@@ -155,7 +155,7 @@ function NavBar() {
                                     </div>
                                     <div className="space-y-2">
                                         <a className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Profile</a>
-                                        <a className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Settings</a>
+                                        <Link to={'/addjob'} className="block py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Add New Job</Link>
                                         <button
                                             className="block w-full text-left py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors text-red-600"
                                             onClick={handleSignOut}
