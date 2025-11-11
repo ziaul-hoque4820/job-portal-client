@@ -1,9 +1,12 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function ViewApplication() {
     const { job_id } = useParams();
-    const applications = useLoaderData();
+    const applicationsData = useLoaderData();
+    const [applications, setApplications] = useState(applicationsData);
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [statusFilter, setStatusFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
@@ -47,10 +50,52 @@ function ViewApplication() {
         });
     };
 
-    const handleStatusChange = (applicationId, newStatus) => {
-        // Here you would typically make an API call to update the status
-        console.log(`Updating application ${applicationId} to status: ${newStatus}`);
-        // Update the local state or refetch data
+    const handleStatusChange = async (applicationId, newStatus) => {
+
+        try {
+            const res = await axios.patch(`http://localhost:3000/applications/${applicationId}`, { status: newStatus });
+
+            if (res.data.modifiedCount > 0) {
+                // Update the local state
+                setApplications(prevApplications =>
+                    prevApplications.map(app =>
+                        app._id === applicationId
+                            ? { ...app, status: newStatus }
+                            : app
+                    )
+                );
+
+                // Update selected application if it's the one being updated
+                if (selectedApplication && selectedApplication._id === applicationId) {
+                    setSelectedApplication(prev => ({ ...prev, status: newStatus }));
+                }
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Status Updated!",
+                    text: `Application status changed to ${newStatus}`,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    toast: true,
+                    background: '#f0f9ff',
+                    iconColor: '#10b981'
+                });
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Update Failed",
+                text: "Failed to update application status",
+                showConfirmButton: false,
+                timer: 3000,
+                toast: true,
+                background: '#fef2f2',
+                iconColor: '#ef4444'
+            });
+        }
     };
 
     if (!applications || applications.length === 0) {
@@ -421,8 +466,8 @@ function ViewApplication() {
                                                         key={status}
                                                         onClick={() => handleStatusChange(selectedApplication._id, status)}
                                                         className={`px-3 py-1 text-xs font-medium rounded-full ${selectedApplication.status === status
-                                                                ? 'bg-indigo-600 text-white'
-                                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                                            ? 'bg-indigo-600 text-white'
+                                                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                                             }`}
                                                     >
                                                         {status.charAt(0).toUpperCase() + status.slice(1)}

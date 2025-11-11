@@ -43,10 +43,14 @@ const JobApplicationPage = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Your work has been saved",
+                        title: "Job Post!",
+                        text: `You have successfully applied for the position of ${jobDetails.title} at ${jobDetails.company}.`,
                         showConfirmButton: false,
-                        timer: 1500
-                    })
+                        timer: 2000,
+                        toast: true,
+                        background: '#f0f9ff',
+                        iconColor: '#10b981'
+                    });
                 }
                 form.reset();
             })

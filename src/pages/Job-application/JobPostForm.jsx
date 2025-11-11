@@ -97,6 +97,7 @@ const JobPostForm = () => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+        const form = e.target;
 
         // Create the JSON object
         const jobPost = {
@@ -129,12 +130,16 @@ const JobPostForm = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Your Job Post has been Added",
+                        title: "Job Post!",
+                        text: `Your Job Post has been Added Successfully.`,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 2000,
+                        toast: true,
+                        background: '#f0f9ff',
+                        iconColor: '#10b981'
                     });
                 }
-                e.target.reset();
+                form.reset();
             })
             .catch(error => {
                 console.log('Error creating job post:', error);
