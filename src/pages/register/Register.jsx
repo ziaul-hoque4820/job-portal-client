@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context/AuthContext';
+import { updateProfile } from 'firebase/auth';
 
 
 const Register = () => {
@@ -10,12 +11,12 @@ const Register = () => {
 
     const handleGoogleRegister = () => {
         signInWithGoogle()
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleRegister = (e) => {
@@ -23,18 +24,29 @@ const Register = () => {
 
         const form = e.target;
         const formData = new FormData(form);
-        const { email, password, ...restFormData } = Object.fromEntries(formData.entries());
-        console.log(email, password, restFormData);
+        const { name, photoURL, email, password } = Object.fromEntries(formData.entries());
 
-        // create user 
         createUser(email, password)
-            .then(result => {
-                console.log(result.user);
+            .then((result) => {
+                const createdUser = result.user;
+
+                // Firebase e displayName and photoURL update
+                updateProfile(createdUser, {
+                    displayName: name,
+                    photoURL: photoURL
+                })
+                    .then(() => {
+                        console.log("Profile Updated");
+                    })
+                    .catch((error) => {
+                        console.log("Profile Update Error:", error);
+                    });
+
             })
             .catch((error) => {
-                console.error(error);
+                console.log(error);
             });
-    }
+    };
 
     return (
         <div className="flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
