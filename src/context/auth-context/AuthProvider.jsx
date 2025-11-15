@@ -45,6 +45,8 @@ function AuthProvider({ children }) {
                         console.log(err);
                     });
             }
+            console.log(currentUser);
+            
         });
         return () => {
             unSubscribe();
