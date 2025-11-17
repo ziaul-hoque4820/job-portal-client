@@ -13,25 +13,12 @@ const MyPostedJobs = () => {
 
 
     useEffect(() => {
-        const fetchApps = async () => {
-            if (user?.email) {
-                const accessToken = await user.getIdToken();
-                
-                axios.get(
-                    `http://localhost:3000/jobs?email=${user.email}`,
-                    {
-                        withCredentials: true,
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    }
-                )
-                    .then(res => setJobs(res.data))
-                    .catch(err => console.log(err));
-            }
-        };
+        if (user?.email) {
+            axios.get(`http://localhost:3000/jobs?email=${user.email}`, { withCredentials: true })
+                .then((res) => setJobs(res.data))
+                .catch((err) => console.log(err));
+        }
 
-        fetchApps();
     }, [user]);
 
     const filteredJobs = jobs.filter(job => {

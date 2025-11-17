@@ -45,7 +45,7 @@ function AuthProvider({ children }) {
                         console.log(err);
                     });
             }
-            console.log(currentUser);
+            // console.log(currentUser);
             
         });
         return () => {

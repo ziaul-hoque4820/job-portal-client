@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import JobCart from './JobCart'
 import JobModal from './JobModal'
-import { div } from 'framer-motion/client'
+// import { div } from 'framer-motion/client'
 
 function JobDetails() {
     const [jobs, setJobs] = useState([])
@@ -9,7 +9,7 @@ function JobDetails() {
     const [selectedJob, setSelectedJob] = useState(null)
 
     useEffect(() => {
-        fetch('http://localhost:3000/jobs')
+        fetch('http://localhost:3000/jobs', { withCredentials: true })
             .then(res => res.json())
             .then(data => {
                 setJobs(data)
