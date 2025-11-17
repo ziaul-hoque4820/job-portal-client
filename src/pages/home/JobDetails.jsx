@@ -9,7 +9,7 @@ function JobDetails() {
     const [selectedJob, setSelectedJob] = useState(null)
 
     useEffect(() => {
-        fetch('http://localhost:3000/jobs', { withCredentials: true })
+        fetch('https://job-portal-server-yuf1.onrender.com/jobs', { withCredentials: true })
             .then(res => res.json())
             .then(data => {
                 setJobs(data)

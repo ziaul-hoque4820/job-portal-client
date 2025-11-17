@@ -53,7 +53,7 @@ function ViewApplication() {
     const handleStatusChange = async (applicationId, newStatus) => {
 
         try {
-            const res = await axios.patch(`http://localhost:3000/applications/${applicationId}`, { status: newStatus });
+            const res = await axios.patch(`https://job-portal-server-yuf1.onrender.com/applications/${applicationId}`, { status: newStatus });
 
             if (res.data.modifiedCount > 0) {
                 // Update the local state

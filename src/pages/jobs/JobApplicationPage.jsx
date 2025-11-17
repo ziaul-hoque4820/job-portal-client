@@ -36,7 +36,7 @@ const JobApplicationPage = () => {
         console.log(applicationData);
 
 
-        axios.post('http://localhost:3000/applications', applicationData)
+        axios.post('https://job-portal-server-yuf1.onrender.com/applications', applicationData)
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

@@ -124,7 +124,7 @@ const JobPostForm = () => {
         console.log(jobPost);
 
         // save data to the server
-        axios.post('http://localhost:3000/jobs', jobPost)
+        axios.post('https://job-portal-server-yuf1.onrender.com/jobs', jobPost)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({

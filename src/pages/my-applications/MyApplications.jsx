@@ -8,7 +8,7 @@ const MyApplications = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:3000/applications?email=${user.email}`, { withCredentials: true })
+            axios.get(`https://job-portal-server-yuf1.onrender.com/applications?email=${user.email}`, { withCredentials: true })
                 .then((res) => setApplications(res.data))
                 .catch((err) => console.log(err));
         }

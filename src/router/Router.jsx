@@ -22,7 +22,7 @@ const router = createBrowserRouter([
             {
                 path: 'jobs/:id',
                 element: <PrivateRoute><JobApplicationPage></JobApplicationPage></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:3000/jobs/${params.id}`)
+                loader: ({ params }) => fetch(`https://job-portal-server-yuf1.onrender.com/jobs/${params.id}`)
             },
             {
                 path: 'my-applications',
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             {
                 path: 'applications/:job_id',
                 element: <PrivateRoute><ViewApplication /> </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:3000/applications/job/${params.job_id}`)
+                loader: ({ params }) => fetch(`https://job-portal-server-yuf1.onrender.com/applications/job/${params.job_id}`)
             },
             {
                 path: 'signin',

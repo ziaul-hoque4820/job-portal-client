@@ -37,7 +37,7 @@ function AuthProvider({ children }) {
 
             if (currentUser?.email) {
                 const userData = { email: currentUser.email };
-                axios.post('http://localhost:3000/jwt', userData, { withCredentials: true })
+                axios.post('https://job-portal-server-yuf1.onrender.com/jwt', userData, { withCredentials: true })
                     .then(res => {
                         console.log(res.data);
                     })
